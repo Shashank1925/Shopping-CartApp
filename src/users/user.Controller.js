@@ -2,7 +2,6 @@ import UserModel from "./user.Schema.js";
 import ErrorHandler from "../Middlewares/error.Middleware.js";
 import { registerUserRepository, loginUserRepository, logoutUserRepository, generatePasswordResetToken, resetPasswordRepository, getUserDetailsRepository, updateUserDetailsRepository, updateProfileRepository } from "./user.Repository.js";
 import sendWelcomeEmail from "../utility/nodemailer.js";
-import crypto from "crypto";
 import path from "path";
 import dotenv from "dotenv";
 dotenv.config();
