@@ -1,0 +1,10 @@
+import express from 'express';
+import { placeOrderController, getOrderController, getAllOrdersController, getAllUsersOrdersController, updateOrderStatusController } from './order.Controller.js';
+import jwtAuthentication from '../Middlewares/jwtAuthentication.js';
+const orderRouter = express.Router();
+orderRouter.post("/new", jwtAuthentication, placeOrderController);
+orderRouter.get("/:orderId", jwtAuthentication, getOrderController);
+orderRouter.get("/my/orders", jwtAuthentication, getAllOrdersController);
+orderRouter.get("/orders/placed", jwtAuthentication, getAllUsersOrdersController);
+orderRouter.put("/update/:orderId", jwtAuthentication, updateOrderStatusController);
+export default orderRouter;

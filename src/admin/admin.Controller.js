@@ -1,6 +1,7 @@
 import { getAllUsers, registerAdmin, loginAdminRepo, getUserRepo, deleteUserRepo, updateUserRoleRepo } from './admin.Repository.js';
 import ErrorHandler from "../Middlewares/error.Middleware.js";
 import sendWelcomeEmail from "../utility/nodemailer.js";
+import AdminModel from './admin.Schema.js';
 // This is register admin
 export const registerAdminController = async (req, res, next) => {
     try {
@@ -54,6 +55,15 @@ export const loginAdminController = async (req, res, next) => {
 // This is about admin who is authorized to get all users details
 export const getAllUsersController = async (req, res, next) => {
     try {
+        const userId = req.userId;
+        if (!userId) {
+            throw new ErrorHandler("You are not authorized to view this page", 403);
+        }
+        // This ensures that only admin can access this route
+        const admin = await AdminModel.findById(userId);
+        if (!admin) {
+            throw new ErrorHandler("You are not authorized to view this page", 403);
+        }
         const users = await getAllUsers(next);
         if (!users) {
             throw new ErrorHandler("No users found", 404);
